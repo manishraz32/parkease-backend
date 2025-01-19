@@ -21,9 +21,9 @@ export const sendMail = async (to, subject, html) => {
   try {
     const res = await transporter.sendMail({
       from: process.env.FROM_EMAIL,
-      to: "widome8883@kurbieh.com",
-      subject: "Test Email",
-      html: "<p>This is a test email.</p>",
+      to: to,
+      subject: subject,
+      html: html,
     });
     console.log("mail sent", res);
   } catch (error) {
