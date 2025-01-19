@@ -12,5 +12,5 @@ export const registerSchema = z.object({
 
 export const emailSchema = z.object({
   email: z.string().email("Envalid format"),
-  passowrd: z.string.min(6, "password should be atleast 6 digits")
+  password: z.string().min(6, "password should be atleast 6 digits")
 })
