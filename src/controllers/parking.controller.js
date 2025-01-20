@@ -1,9 +1,14 @@
 import User from "../models/user.model.js";
+import { ZodError } from "zod";
 import ParkingSpace from "../models/parking.model.js";
+import { parkingSpaceValidationSchema } from "../validations/parkingValidation.js";
+import { formatError, renderEmailEjs } from "../utils/helperFun.js";
 
 export const handleAddParkingRoute = async (req, res) => {
   try {
-    const parkingSpace = new ParkingSpace(req.body);
+    const body = req.body;
+    const payload = parkingSpaceValidationSchema.parse(body);
+    const parkingSpace = new ParkingSpace(payload);
     const savedParkingSpace = await parkingSpace.save();
     res.status(201).json({
       success: true,
@@ -11,6 +16,16 @@ export const handleAddParkingRoute = async (req, res) => {
       data: savedParkingSpace,
     });
   } catch (error) {
+    if (error instanceof ZodError) {
+      const errors = formatError(error);
+      return res.status(422).json({
+        success: false,
+        error: {
+          message: "Invalid Data",
+          error: errors,
+        },
+      });
+    }
     res.status(400).json({
       success: false,
       message: "Failed to create parking space",
@@ -21,9 +36,10 @@ export const handleAddParkingRoute = async (req, res) => {
 
 export const getAllParkingSpace = async (req, res) => {
   try {
+    // populate have to added later
     const parkingSpaces = await ParkingSpace.find()
-      .populate("ownerId")
-      .populate("currentBookings");
+      // .populate("ownerId")
+      // .populate("currentBookings");
     res.status(200).json({
       success: true,
       message: "Parking spaces retrieved successfully",
@@ -42,8 +58,8 @@ export const getParkingById = async (req, res) => {
   const { id } = req.params;
   try {
     const parkingSpace = await ParkingSpace.findById(id)
-      .populate("ownerId")
-      .populate("currentBookings");
+      // .populate("ownerId")
+      // .populate("currentBookings");
     if (!parkingSpace) {
       return res.status(404).json({
         success: false,

@@ -11,6 +11,21 @@ const parkingSpaceSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  country: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  state: {
+    type: String,
+    required: true,
+    default: "",
+  },
+  city: {
+    type: String,
+    required: true,
+    default: "",
+  },
   email: {
     type: String,
     required: true,
@@ -28,17 +43,17 @@ const parkingSpaceSchema = new mongoose.Schema({
     default: 0,
   },
   acceptedVehicleType: {
-    type: String,
+    type: [String],
     enum: ["motercycle", "car"],
     default: [],
   },
   price: {
-    motorcycle: {
+    motorcyclePrice: {
       type: Number,
       required: true,
       default: 0,
     },
-    car: {
+    carPrice: {
       type: Number,
       required: true,
       default: 0,
@@ -51,13 +66,13 @@ const parkingSpaceSchema = new mongoose.Schema({
   ownerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    default: ""
+    default: "",
   },
   currentBookings: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "UserBooking",
-    default: []
-  }
+    default: [],
+  },
 });
 
 const ParkingSpace = mongoose.model("parking", parkingSpaceSchema);

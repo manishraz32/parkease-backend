@@ -50,7 +50,9 @@ export const handleRegisterRoute = async (req, res) => {
     await user.save();
 
     return res.status(201).json({
-      user,
+      success: true,
+      message: "user created successfully",
+      dat:user,
     });
   } catch (error) {
     console.log("error in register route handler", error);
