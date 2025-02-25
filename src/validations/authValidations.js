@@ -7,7 +7,7 @@ export const registerSchema = z.object({
     .max(20, "username should be less than 20 character"),
   email: z.string().email("Invalid email format"),
   password: z.string().min(6, "password should be atleast 6 character"),
-  role: z.string(),
+  role: z.string().default("user"),
 });
 
 export const emailSchema = z.object({

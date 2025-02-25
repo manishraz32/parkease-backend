@@ -14,6 +14,7 @@ export const handleRegisterRoute = async (req, res) => {
   try {
     const body = req.body;
     const payload = registerSchema.parse(body);
+    console.log("register payload", payload);
     let user = await User.findOne({ email: payload.email });
     if (user) {
       return res.status(409).json({
@@ -91,7 +92,7 @@ export const handleVerifiyEmailRoute = async (req, res) => {
       if (!updatedUser) {
         return res.status(404).json({ error: "user not fount" });
       }
-      return res.redirect(`${process.env.CLIENT_URL}/user/login`);
+      return res.redirect(`${process.env.CLIENT_URL}/login`);
     }
   } else {
     return res.status(400).json({
