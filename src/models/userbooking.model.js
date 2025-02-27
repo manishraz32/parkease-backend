@@ -18,8 +18,8 @@ const userBookingSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ["pendng", "success"],
-    default: String,
+    enum: ["pending", "success"],
+    default: "pending",
   },
   vehicleType: {
     type: String,

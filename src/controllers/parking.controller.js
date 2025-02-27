@@ -34,6 +34,11 @@ export const handleAddParkingRoute = async (req, res) => {
   }
 };
 
+
+export const getAllparking = async (req, res) => {
+  
+}
+
 export const getAllParkingSpace = async (req, res) => {
   try {
     // populate have to added later
